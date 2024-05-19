@@ -1,0 +1,982 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+
+  <model name="diff_rover">
+
+
+    <link name='base_link'>
+      <pose>0 0 0.008 0 0 0</pose>
+  
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>20.0</mass>
+        <inertia>
+          <ixx>0.37083</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.37083</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.53333</izz>
+        </inertia>
+      </inertial>
+
+      <visual name='base_link_visual'>
+        <geometry>
+          <box>
+            <size>0.4 0.5 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+
+      <collision name='caster_collision_ghost'>
+        <pose>0.3 0 -0.03 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>0.45</mu2>
+              <slip1>1.0</slip1>
+              <slip2>1.0</slip2>
+            </ode>
+          </friction>
+          <bounce>
+            <restitution_coefficient>0</restitution_coefficient>
+            <threshold>1e6</threshold>
+          </bounce>
+        </surface>
+      </collision>
+
+      <collision name='caster_collision'>
+        <pose>-0.15 0 -0.05 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>0.45</mu2>
+              <slip1>1.0</slip1>
+              <slip2>1.0</slip2>
+            </ode>
+          </friction>
+          <bounce>
+            <restitution_coefficient>0</restitution_coefficient>
+            <threshold>1e6</threshold>
+          </bounce>
+        </surface>
+      </collision>
+
+      <visual name='caster_visual'>
+        <pose>-0.15 0 -0.05 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Left Wheel -->
+
+    <link name="left_wheel">
+      <pose>0.1 0.33 0 1.57 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 1.57 0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.0003</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0003</iyy>
+          <iyz>0</iyz>
+          <izz>0.0004</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+          <surface>
+            <friction>
+              <torsional>
+                <coefficient>0.25</coefficient>
+                <use_patch_radius>1</use_patch_radius>
+                <surface_radius>0.0686</surface_radius>
+              </torsional>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>0.45</mu2>
+                <fdir1>1 0 0</fdir1>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+              <threshold>1e6</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.0</max_vel>
+                <kp>1.0e6</kp>
+                <kd>100.0</kd>
+                <minDepth>0.001</minDepth>
+              </ode>
+            </contact>
+          </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint type="revolute" name="left_wheel_hinge">
+      <pose>0 0 0 0 0 0</pose>
+      <child>left_wheel</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Right Wheel -->
+
+    <link name="right_wheel">
+      <pose>0.1 -0.33 0 1.57 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 1.57 0 0</pose>
+        <mass>0.4</mass>
+        <inertia>
+          <ixx>0.0003</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0003</iyy>
+          <iyz>0</iyz>
+          <izz>0.0004</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+          <surface>
+            <friction>
+              <torsional>
+                <coefficient>0.25</coefficient>
+                <use_patch_radius>1</use_patch_radius>
+                <surface_radius>0.0686</surface_radius>
+              </torsional>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>0.45</mu2>
+                <fdir1>1 0 0</fdir1>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+              <threshold>1e6</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.0</max_vel>
+                <kp>1.0e6</kp>
+                <kd>100.0</kd>
+                <minDepth>0.001</minDepth>
+              </ode>
+            </contact>
+          </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint type="revolute" name="right_wheel_hinge">
+      <pose>0 0 0 0 0 0</pose>
+      <child>right_wheel</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- GPS Sensors -->
+  
+    <include>
+        <uri>model://gps</uri>
+        <pose>0.1 0 0.1 0 0 0</pose>
+        <name>gps</name>
+    </include>
+
+    <joint name='gps_joint' type='fixed'>
+        <child>gps::link</child>
+        <parent>base_link</parent>
+    </joint>
+
+
+
+
+    <!-- IMU -->
+    <link name='rover/imu_link'>
+
+      <pose>0 0 0.1 0 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.04</radius>
+            <length>0.004</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+
+    <joint name='rover/imu_joint' type='revolute'>
+      <child>rover/imu_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+
+
+
+    <!-- Ground Truth -->
+
+    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+      <robotNamespace/>
+    </plugin>
+
+
+    <!-- Magnetometer -->
+
+    <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
+      <robotNamespace/>
+      <pubRate>100</pubRate>
+      <noiseDensity>0.0004</noiseDensity>
+      <randomWalk>6.4e-06</randomWalk>
+      <biasCorrelationTime>600</biasCorrelationTime>
+      <magTopic>/mag</magTopic>
+    </plugin>
+
+
+    <!-- Barometer -->
+
+    <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
+      <robotNamespace/>
+      <pubRate>50</pubRate>
+      <baroTopic>/baro</baroTopic>
+    </plugin>
+
+
+    <!-- Lidar -->
+
+    <link name="lidar_link">
+      <pose>0 0 0.12 0 0 0</pose>
+      <gravity>false</gravity>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>
+
+      <sensor name="laser" type="ray">
+        <pose>0 0 0 0 -0 0</pose>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>6.28319</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.08</min>
+            <max>10</max>
+            <resolution>0.015</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <plugin name="laser" filename="libgazebo_ros_laser.so"> 
+        <topicName>/base_scan</topicName> 
+        <frameName>lidar</frameName> 
+        </plugin> 
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+
+      <!-- <sensor type="ray" name="TeraRanger">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>true</visualize>
+          <update_rate>50</update_rate>
+          <ray>
+            <scan>
+                <horizontal>
+                  <samples>10</samples>
+                  <resolution>1</resolution> 
+                  <min_angle>-0.14835</min_angle>
+                  <max_angle>0.14835</max_angle>
+                </horizontal>
+                <vertical>
+                  <samples>10</samples>
+                  <resolution>1</resolution> 
+                  <min_angle>-0.0014835</min_angle>
+                  <max_angle>0.14835</max_angle> 
+                </vertical>
+            </scan>
+            <range>
+                <min>0.01</min>
+                <max>2</max>
+                <resolution>0.02</resolution>
+            </range>
+          </ray>
+          <plugin name="gazebo_ros_range" filename="libgazebo_ros_range.so">
+            <gaussianNoise>0.005</gaussianNoise>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>50</updateRate>
+            <topicName>sensor/ir_front</topicName>
+            <frameName>base_ir_front</frameName>
+            <radiation>INFRARED</radiation>
+            <fov>0.2967</fov>
+          </plugin>
+          <visualize>true</visualize>
+      </sensor>   -->
+    </link>
+
+    <joint type="fixed" name="lidar_joint">
+      <pose>0 0 0 0 0 0</pose>
+      <child>lidar_link</child>
+      <parent>base_link</parent>
+    </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--FPV Camera -->
+
+    <link name='camera_link'>
+      <pose>0.1 0 0.08 0 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>
+
+      <sensor type="camera" name="main_camera">
+        <pose>0 0 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.6075201319067056</horizontal_fov>
+          <image>
+            <format>B8G8R8</format>
+            <width>320</width>
+            <height>240</height>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>1000</far>
+          </clip>
+          <distortion>
+            <k1>-0.273377</k1>
+            <k2>0.0642871</k2>
+            <k3>-0.00599387</k3>
+            <p1>-0.00086158</p1>
+            <p2>-0.000443529</p2>
+          </distortion>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>40</update_rate>
+        <visualize>1</visualize>
+        <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraTopicName>camera_info</cameraTopicName>
+          <updateRate>40</updateRate>
+          <cameraName>main_camera</cameraName>
+          <frameName>main_camera_optical</frameName>
+          <CxPrime>158.0735</CxPrime>
+          <Cx>158.0735</Cx>
+          <Cy>108.513</Cy>
+          <!-- <focalLength>????</focalLength> -->
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+          <!-- throttling_camera specific options start here -->
+          <minUpdateRate>38</minUpdateRate>
+          <windowSize>40</windowSize>
+          <maxStDev>0.075</maxStDev>
+        </plugin>
+        <plugin name="GstCameraPlugin" filename="libgazebo_gst_camera_plugin.so">
+            <robotNamespace></robotNamespace>
+            <udpHost>127.0.0.1</udpHost>
+            <udpPort>5600</udpPort>
+        </plugin>
+
+      </sensor>
+      <self_collide>0</self_collide>
+      <kinematic>0</kinematic>
+    </link>
+
+    <joint type="fixed" name="camera_joint">
+      <parent>base_link</parent>
+      <child>camera_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Detph Camera -->
+
+    <link name="realsense_link">
+      <pose>0.15 0 0.12 0 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://realsense_camera/meshes/realsense.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <sensor name="depth_camera" type="depth">
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.02974</horizontal_fov>
+          <image>
+            <format>R8G8B8</format>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.5</near>
+            <far>18</far>
+          </clip>
+        </camera>
+        <plugin filename="libgazebo_ros_openni_kinect.so" name="camera_controller">
+          <cameraName>camera</cameraName>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>20</updateRate>
+          <pointCloudCutoff>0.2</pointCloudCutoff>
+          <pointCloudCutoffMax>20</pointCloudCutoffMax>
+          <imageTopicName>rgb/image_raw</imageTopicName>
+          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>depth/image_raw</depthImageTopicName>
+          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudTopicName>depth/points</pointCloudTopicName>
+          <frameName>camera_link</frameName>
+          <distortion_k1>0.0</distortion_k1>
+          <distortion_k2>0.0</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0</distortion_t1>
+          <distortion_t2>0.0</distortion_t2>
+        </plugin>
+      </sensor>
+    </link>
+
+    <joint type="fixed" name="realsense_joint">
+      <parent>base_link</parent>
+      <child>realsense_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Stereo Camera -->
+
+    <!-- <link name="stereo_link">
+      <pose>0.1 0 0.1 0 0 0</pose>
+ 
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+  
+      <visual name="visual">
+        <pose>0 0 0 0 1.57 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://depth_camera/meshes/hokuyo.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <sensor type="multicamera" name="stereo_camera">
+        <update_rate>7.0</update_rate>
+ 
+        <camera name="left">
+          <pose>0.1 0.035 0 0 0 0</pose>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>400</width>
+            <height>400</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+  
+        <camera name="right">
+          <pose>0.1 -0.035 0 0 0 0</pose>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>400</width>
+            <height>400</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+   
+        <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>stereo</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>camera</frameName>
+          <hackBaseline>0.07</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+
+    </link>
+
+    <joint type="fixed" name="stereo_joint">
+      <parent>base_link</parent>
+      <child>stereo_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Diff Drive Plugin -->
+    <!-- <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+      <updateRate>30</updateRate>
+      <leftJoint>left_wheel_hinge</leftJoint>
+      <rightJoint>right_wheel_hinge</rightJoint>
+
+      <wheelSeparation>0.66</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+
+      <wheelAcceleration>1.0</wheelAcceleration>
+      <wheelTorque>400</wheelTorque>
+
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>robotodom</odometryTopic>
+
+      <odometryFrame>robotodom</odometryFrame>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+
+      <odometrySource>1</odometrySource>
+      <publishWheelTF>true</publishWheelTF>
+      <publishOdom>true</publishOdom>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+    </plugin> -->
+
+
+
+
+
+
+
+
+    <!--Mavlink -->
+
+    <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
+      <robotNamespace></robotNamespace>
+      <imuSubTopic>/imu</imuSubTopic>
+      <magSubTopic>/mag</magSubTopic>
+      <baroSubTopic>/baro</baroSubTopic>
+      <mavlink_addr>INADDR_ANY</mavlink_addr>
+      <mavlink_tcp_port>4560</mavlink_tcp_port>
+      <mavlink_udp_port>14560</mavlink_udp_port>
+      <serialEnabled>0</serialEnabled>
+      <serialDevice>/dev/ttyACM0</serialDevice>
+      <baudRate>921600</baudRate>
+      <qgc_addr>INADDR_ANY</qgc_addr>
+      <qgc_udp_port>14550</qgc_udp_port>
+      <sdk_addr>INADDR_ANY</sdk_addr>
+      <sdk_udp_port>14540</sdk_udp_port>
+      <hil_mode>0</hil_mode>
+      <hil_state_level>false</hil_state_level>
+      <enable_lockstep>true</enable_lockstep>
+      <use_tcp>true</use_tcp>
+      <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      <control_channels>
+
+        <channel name="left_wheel_drive">
+          <input_index>0</input_index>
+          <input_offset>0</input_offset>
+          <input_scaling>-20</input_scaling>
+          <zero_position_disarmed>0</zero_position_disarmed>
+          <zero_position_armed>0</zero_position_armed>
+          <joint_control_type>velocity</joint_control_type>
+          <joint_name>left_wheel_hinge</joint_name>
+          <joint_control_pid>
+            <p>0.7</p>
+            <i>0</i>
+            <d>0</d>
+            <iMax>800</iMax>
+            <iMin>-800</iMin>
+            <cmdMax>1200</cmdMax>
+            <cmdMin>-1200</cmdMin>
+          </joint_control_pid>
+        </channel>
+
+        <channel name="right_wheel_drive">
+          <input_index>5</input_index>
+          <input_offset>0</input_offset>
+          <input_scaling>-20</input_scaling>
+          <zero_position_disarmed>0</zero_position_disarmed>
+          <zero_position_armed>0</zero_position_armed>
+          <joint_control_type>velocity</joint_control_type>
+          <joint_name>right_wheel_hinge</joint_name>
+          <joint_control_pid>
+            <p>0.7</p>
+            <i>0</i>
+            <d>0</d>
+            <iMax>800</iMax>
+            <iMin>-800</iMin>
+            <cmdMax>1200</cmdMax>
+            <cmdMin>-1200</cmdMin>
+          </joint_control_pid>
+        </channel>
+
+
+
+      </control_channels>
+    </plugin>
+
+    <!-- Physics -->
+    <static>0</static>
+
+
+    <!-- IMU -->
+
+    <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <robotNamespace></robotNamespace>
+      <linkName>rover/imu_link</linkName>
+      <imuTopic>/imu</imuTopic>
+      <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
+      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
+      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
+      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
+      <accelerometerNoiseDensity>0.004</accelerometerNoiseDensity>
+      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
+      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
+      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
+    </plugin>
+
+
+  </model> 
+</sdf>
